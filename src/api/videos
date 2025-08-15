@@ -1,0 +1,7 @@
+// server.js or backend route
+app.post('/api/videos', (req, res) => {
+  const { title, url } = req.body;
+  // Save to DB or in-memory array
+  console.log("Video received:", title, url);
+  res.status(200).json({ message: 'Video saved successfully!' });
+});

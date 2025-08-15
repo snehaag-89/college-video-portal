@@ -1,25 +1,58 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import Navbar from "./Components/Navbar";
+import Home from "./pages/Home";
+import Upload from "./pages/Upload";
+import Watch from "./pages/Watch";
+import Login from "./pages/Login";
 
-function App() {
+function PrivateRoute({ children }) {
+  const className = localStorage.getItem("className");
+  return className ? children : <Navigate to="/login" replace />;
+}
+
+function AppContent() {
+  const location = useLocation();
+  const hideNavbar = location.pathname === "/login";
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {!hideNavbar && <Navbar />}
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <PrivateRoute>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/upload"
+          element={
+            <PrivateRoute>
+              <Upload />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/watch"
+          element={
+            <PrivateRoute>
+              <Watch />
+            </PrivateRoute>
+          }
+        />
+      </Routes>
+    </>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}
