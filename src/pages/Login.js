@@ -19,7 +19,7 @@ export default function Login() {
 
     if (passwords[className] && passwords[className] === password) {
       localStorage.setItem("className", className);
-      navigate("/home");
+      navigate("/");
     } else {
       alert("Invalid class name or password");
     }
