@@ -53,7 +53,7 @@ export default function Watch() {
               <video
                 controls
                 className="w-full rounded-lg mb-2"
-                src={video.url}
+                src={video.supabaseUrl}
               ></video>
               <p className="text-gray-700 font-medium">{video.title}</p>
             </div>
